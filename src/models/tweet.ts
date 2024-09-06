@@ -1,8 +1,8 @@
 export interface Tweet {
   author: string;
   content: string;
-  likes: string;
-  retweets: string;
-  replies: string;
+  likes: number;
+  retweets: number;
+  replies: number;
   date: string;
 }

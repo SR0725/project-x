@@ -17,6 +17,7 @@
     "typescript": "^5.5.4"
   },
   "dependencies": {
+    "dotenv": "^16.4.5",
     "puppeteer": "^23.2.1",
     "puppeteer-core": "^23.2.1",
     "tsconfig-paths": "^4.2.0"
