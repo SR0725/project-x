@@ -1,20 +1,25 @@
-
-import { Document, VectorStoreIndex } from "llamaindex";
+import { z } from "zod";
+import createLLMNode from "@/backend/utils/llm-node";
 import { Tweet } from "@/models/tweet";
-import selectPeriodicTopLikedTweets from "./select-periodic-top-liked-tweets";
+import formatTweets from "./format-tweets";
+
+const responseSchema = z.object({
+  currentJob: z.object({
+    title: z.string(),
+    reason: z.string(),
+  }),
+  alternativeJob: z.object({
+    title: z.string(),
+    reason: z.string(),
+  }),
+});
 
 async function generateYourOtherPossible(posts: Tweet[]) {
-  const periodicTopPosts = selectPeriodicTopLikedTweets(posts, 7);
-  console.log(periodicTopPosts);
-  const index = await VectorStoreIndex.fromDocuments(
-    periodicTopPosts
-      .filter((post) => post.content.length > 0)
-      .map((post) => new Document({ text: post.content }))
+  const response = await createLLMNode(
+    "generate-your-other-possible",
+    responseSchema,
+    formatTweets(posts)
   );
-  const queryEngine = index.asQueryEngine();
-  const { response, sourceNodes } = await queryEngine.query({
-    query: "請幫我找出任何可以跟可以判斷出此人性格的推文",
-  });
   return response;
 }
 

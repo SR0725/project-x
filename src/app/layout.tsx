@@ -40,10 +40,7 @@ export default async function RootLayout({
     <html>
       <head />
       <body
-        className={clsx(
-          "bg-background min-h-screen font-sans antialiased",
-          fontSans.variable
-        )}
+        className={clsx("min-h-screen bg-background font-sans antialiased")}
       >
         <Providers>
           <Toaster />

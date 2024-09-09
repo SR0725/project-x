@@ -5,7 +5,7 @@ import queryAllTweets from "./query-all-tweets";
 
 async function scrapeTwitterPosts(
   username: string,
-  maxPostsNumber: number = 500
+  maxPostsNumber: number = 80
 ) {
   const browser = await puppeteer.connect({
     browserWSEndpoint:
@@ -15,7 +15,7 @@ async function scrapeTwitterPosts(
   await page.setUserAgent(
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
   );
-  // // 設定 auth_token cookie
+  // 設定 auth_token cookie
   await page.setCookie({
     name: "auth_token",
     value: process.env.TWITTER_AUTH_TOKEN || "",
