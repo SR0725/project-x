@@ -1,9 +1,11 @@
+import axios from "axios";
 import { z } from "zod";
 import createLLMNode from "@/backend/utils/llm-node";
 import { Tweet } from "@/models/tweet";
 import formatTweets from "./format-tweets";
+import { generateImage } from "./generate-image";
 
-const responseSchema = z.object({
+const generateYourOtherPossibleResponseSchema = z.object({
   currentJob: z.object({
     title: z.string(),
     reason: z.string(),
@@ -14,13 +16,33 @@ const responseSchema = z.object({
   }),
 });
 
+const imageGenerateWithOtherPossibleResponseSchema = z.object({
+  prompt: z.string(),
+});
+
 async function generateYourOtherPossible(posts: Tweet[]) {
-  const response = await createLLMNode(
+  const generateYourOtherPossibleResponse = await createLLMNode(
     "generate-your-other-possible",
-    responseSchema,
+    generateYourOtherPossibleResponseSchema,
     formatTweets(posts)
   );
-  return response;
+  if (!generateYourOtherPossibleResponse) {
+    throw new Error("generateYourOtherPossibleResponse is null");
+  }
+  const imagePrompt = await createLLMNode(
+    "image-generate-with-other-possible",
+    imageGenerateWithOtherPossibleResponseSchema,
+    generateYourOtherPossibleResponse.alternativeJob.title
+  );
+  if (!imagePrompt) {
+    throw new Error("imagePrompt is null");
+  }
+  const image = await generateImage(imagePrompt.prompt);
+
+  return {
+    ...generateYourOtherPossibleResponse,
+    image,
+  };
 }
 
 export default generateYourOtherPossible;

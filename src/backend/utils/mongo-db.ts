@@ -1,9 +1,11 @@
 import type { Collection } from "mongodb";
 import { MongoClient } from "mongodb";
 import { LLMNode } from "@/models/llm-node";
+import { TweetAnalyzeReport } from "@/models/tweet-analyze-report";
 
 export interface MongoCollections {
   llmNodeCollection: Collection<LLMNode>;
+  tweetAnalyzeReportCollection: Collection<TweetAnalyzeReport>;
 }
 
 export let defaultMongoCollections: MongoCollections | null = null;
@@ -21,9 +23,13 @@ async function createMongoClientCollection(): Promise<MongoCollections> {
 
   const mainDb = client.db(mainDbName);
   const llmNodeCollection = mainDb.collection<LLMNode>("llm-nodes");
+  const tweetAnalyzeReportCollection = mainDb.collection<TweetAnalyzeReport>(
+    "tweet-analyze-reports"
+  );
 
   return {
     llmNodeCollection,
+    tweetAnalyzeReportCollection,
   };
 }
 

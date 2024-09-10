@@ -1,7 +1,8 @@
 import { Viewport } from "next";
 import clsx from "clsx";
 import { Toaster } from "sonner";
-import "@/styles/globals.css";
+import Header from "@/components/header";
+import "./globals.css";
 import { Providers } from "./providers";
 
 export async function generateMetadata({
@@ -40,10 +41,11 @@ export default async function RootLayout({
     <html>
       <head />
       <body
-        className={clsx("min-h-screen bg-background font-sans antialiased")}
+        className={clsx("min-h-screen bg-black font-sans antialiased dark")}
       >
         <Providers>
           <Toaster />
+          <Header />
           {children}
         </Providers>
       </body>

@@ -1,7 +1,7 @@
 import { getDefaultLLMNodeRepository } from "../repositories/llm-node-repository";
 import { zodResponseFormat } from "openai/helpers/zod";
 import { ZodSchema } from "zod";
-import { createOpenAI } from "@/utils/openai";
+import { createOpenAI } from "@/backend/utils/openai";
 
 export async function createLLMNode<T>(
   name: string,

@@ -32,6 +32,12 @@ export default class LLMNodeRepository {
       { upsert: true }
     );
   }
+
+  async updateMany(llmNodes: LLMNode[]) {
+    for (const llmNode of llmNodes) {
+      await this.update(llmNode);
+    }
+  }
 }
 
 export async function getDefaultLLMNodeRepository() {
