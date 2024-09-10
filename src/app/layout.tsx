@@ -12,11 +12,11 @@ export async function generateMetadata({
 }) {
   return {
     title: {
-      default: `Suta`,
-      template: `Suta | %s`,
+      default: `Twitter 社群職業大解密`,
+      template: `Twitter 社群職業大解密 | %s`,
     },
-    description: "description",
-    keywords: "keywords",
+    description: "Twitter 社群職業大解密",
+    keywords: "Twitter 社群職業大解密",
     themeColor: [{ color: "#f6f5f5" }],
     authors: [{ name: "Ray 貓" }],
     icons: {
