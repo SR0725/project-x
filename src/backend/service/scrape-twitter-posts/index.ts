@@ -8,8 +8,7 @@ async function scrapeTwitterPosts(
   maxPostsNumber: number = 80
 ) {
   const browser = await puppeteer.connect({
-    browserWSEndpoint:
-      "https://browserless-ray-realms.zeabur.app/chrome?token=gl33lskdmpw24xmww235gsw2",
+    browserWSEndpoint: process.env.BROWSERLESS_URL || "",
   });
   const page = await browser.newPage();
   await page.setUserAgent(
