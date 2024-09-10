@@ -22,15 +22,14 @@ async function scrapeTwitterPosts(
     domain: "x.com",
     path: "/",
   });
-
-  await page.goto(`https://x.com/${username}`);
-
-  await delay(3000);
   const posts: Tweet[] = [];
   let lastScrollHeight = 0;
   let currentScrollHeight = 0;
 
   try {
+    await page.goto(`https://x.com/${username}`);
+
+    await delay(3000);
     while (true) {
       const newPosts = await page.evaluate(queryAllTweets);
       newPosts.forEach((post) => {
@@ -57,8 +56,9 @@ async function scrapeTwitterPosts(
     }
   } catch (error) {
     console.error(error);
+  } finally {
+    await browser.close();
   }
-  await browser.close();
 
   return posts;
 }
