@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { toast } from "sonner";
 import {
   Modal,
   ModalContent,
@@ -14,7 +15,6 @@ import {
 } from "@nextui-org/react";
 import { LLMNode } from "@/models/llm-node";
 import axiosInstance from "@/utils/axios";
-import { toast } from "sonner";
 
 interface SettingModalProps {
   period: number;
@@ -52,7 +52,7 @@ export default function SettingModal({
   return (
     <>
       <Button onPress={onOpen}>設定介面</Button>
-      <Modal size="xl" isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal size="3xl" isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <>
@@ -74,6 +74,7 @@ export default function SettingModal({
                 />
                 {llmNodes.map((llmNode) => (
                   <Textarea
+                    minRows={32}
                     key={llmNode.name}
                     label={llmNode.name}
                     type="text"

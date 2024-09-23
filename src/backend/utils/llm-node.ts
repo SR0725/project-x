@@ -6,7 +6,8 @@ import { createOpenAI } from "@/backend/utils/openai";
 export async function createLLMNode<T>(
   name: string,
   outputSchema: ZodSchema<T>,
-  input: string
+  input: string,
+  inputImageUrl?: string
 ): Promise<T | null> {
   const openai = createOpenAI();
   const llmNodeRepository = await getDefaultLLMNodeRepository();
@@ -25,7 +26,17 @@ export async function createLLMNode<T>(
       },
       {
         role: "user",
-        content: input,
+        content: inputImageUrl ? 
+        [
+          { type: "text", text: input },
+          {
+            type: "image_url",
+            image_url: {
+              "url": inputImageUrl,
+            },
+          },
+        ]
+        :input,
       },
     ],
     response_format: zodResponseFormat(outputSchema, "response"),

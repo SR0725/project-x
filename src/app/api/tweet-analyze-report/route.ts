@@ -24,6 +24,7 @@ export async function POST(request: NextRequest) {
   }
   const tweetAnalyzeReportRepository =
     await getDefaultTweetAnalyzeReportRepository();
+    
   const id = randomUUID();
 
   await tweetAnalyzeReportRepository.create({
@@ -35,13 +36,14 @@ export async function POST(request: NextRequest) {
     posts: [],
     periodicTopPosts: [],
     result: "",
+    reason: "",
     image: undefined,
   });
 
   scrapeTwitterPosts(username, maxScrapeNumber)
-    .then(async (posts) => {
+    .then(async ({posts, avatarUrl}) => {
       const periodicTopPosts = selectPeriodicTopLikedTweets(posts, period);
-      const result = await generateYourOtherPossible(periodicTopPosts);
+      const result = await generateYourOtherPossible(periodicTopPosts, avatarUrl);
       if (!result) {
         return;
       }
@@ -53,7 +55,8 @@ export async function POST(request: NextRequest) {
         maxScrapeNumber,
         posts,
         periodicTopPosts,
-        result: `${username} 是被${result.currentJob.title}耽誤的${result.alternativeJob.title}`,
+        result: `${username} 是被${result.currentJob}耽誤的${result.alternativeJob}`,
+        reason: result.reason,
         image: result.image,
       });
     })

@@ -2,6 +2,7 @@ import puppeteer from "puppeteer-core";
 import { Tweet } from "@/models/tweet";
 import delay from "@/utils/delay";
 import queryAllTweets from "./query-all-tweets";
+import queryAvatar from "./query-avatar";
 
 async function scrapeTwitterPosts(
   username: string,
@@ -24,11 +25,12 @@ async function scrapeTwitterPosts(
   const posts: Tweet[] = [];
   let lastScrollHeight = 0;
   let currentScrollHeight = 0;
-
+  let avatarUrl = "";
   try {
     await page.goto(`https://x.com/${username}`);
 
     await delay(3000);
+    avatarUrl = await page.evaluate(queryAvatar);
     while (true) {
       const newPosts = await page.evaluate(queryAllTweets);
       newPosts.forEach((post) => {
@@ -59,7 +61,9 @@ async function scrapeTwitterPosts(
     await browser.close();
   }
 
-  return posts;
+  console.log("posts", posts.length);
+  console.log("avatarUrl", avatarUrl);
+  return { posts, avatarUrl };
 }
 
 export default scrapeTwitterPosts;

@@ -33,35 +33,67 @@ function PageContainer({ id }: { id: string }) {
 
   if (isProcessing) {
     return (
-      <div className="mt-32 flex animate-pulse flex-col items-center justify-center gap-8">
-        <h1 className="text-4xl font-bold">AI 正在分析中 ...</h1>
-        <Progress
-          aria-label="分析中..."
-          value={analyzeProgress}
-          className="max-w-md"
-        />
-        <div>
-          <Image src="/home.png" alt="Main Image" width={720} height={411} />
+      <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-purple-600 to-blue-500 p-4">
+        <div className="w-full max-w-4xl overflow-hidden rounded-2xl bg-white shadow-2xl">
+          <div className="p-8 sm:p-12">
+            <h1 className="mb-6 text-center text-4xl font-bold text-gray-800 sm:text-5xl">
+              社群職業大解密
+            </h1>
+            <p className="mb-8 animate-pulse text-center text-xl text-gray-600 sm:text-2xl">
+              AI 正在分析中 ...
+            </p>
+            <section className="space-y-6">
+              <Progress
+                aria-label="分析中..."
+                value={analyzeProgress}
+                className="w-full"
+              />
+            </section>
+          </div>
+          <Image
+            src="/home.png"
+            alt="Main Image"
+            width={720}
+            height={411}
+            className="mx-auto"
+          />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="mt-32 flex flex-col items-center justify-center gap-8">
-      <h1 className="text-4xl font-bold">{tweetAnalyzeReport?.result}</h1>
-
-      {tweetAnalyzeReport?.image && (
-        <div>
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-purple-600 to-blue-500 p-4">
+      <div className="w-full max-w-4xl overflow-hidden rounded-2xl bg-white shadow-2xl">
+        <div className="p-8 sm:p-12">
+          <h1 className="mb-6 text-center text-4xl font-bold text-gray-800 sm:text-5xl">
+            社群職業大解密
+          </h1>
+          <p className="mb-8 text-center text-xl text-gray-600 sm:text-2xl">
+            {tweetAnalyzeReport?.result}
+          </p>
+          <section className="space-y-6">
+              <p>{tweetAnalyzeReport?.reason}</p>
+          </section>
+        </div>
+        {tweetAnalyzeReport?.image ? (
           <Image
             src={tweetAnalyzeReport.image}
             alt="image"
             width={720}
             height={411}
-            className="rounded-lg"
+            className="rounded-lg mx-auto mb-8"
           />
-        </div>
-      )}
+        ) : (
+          <Image
+            src="/home.png"
+            alt="Main Image"
+            width={720}
+            height={411}
+            className="mx-auto"
+          />
+        )}
+      </div>
     </div>
   );
 }

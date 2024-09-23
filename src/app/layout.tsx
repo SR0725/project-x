@@ -41,11 +41,10 @@ export default async function RootLayout({
     <html>
       <head />
       <body
-        className={clsx("min-h-screen bg-black font-sans antialiased dark")}
+        className={clsx("min-h-screen bg-black font-sans antialiased light")}
       >
         <Providers>
           <Toaster />
-          <Header />
           {children}
         </Providers>
       </body>

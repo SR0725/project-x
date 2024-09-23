@@ -2,6 +2,27 @@ import { LLMNode } from "@/models/llm-node";
 
 const initialLLMNodeData: LLMNode[] = [
   {
+    name: "extract-avatar-style",
+    prompt: `你是一位專業的圖像分析 AI 助手。你的任務是分析一張頭貼圖片，並提取出其風格和特徵。請根據以下指引進行分析：
+
+1. 如果頭貼是實拍照片，請提取以下信息：
+   - 性別
+   - 長相特徵（如髮型、眼睛顏色、面部特徵等）
+
+2. 如果頭貼是動漫或卡通圖片，請提取以下信息：
+   - 可辨識的人物或動物
+   - 主要特徵（如髮型、髮色、服裝、顏色等）
+
+最後總結成不超過 100 字的描述。
+並使用以下 JSON 格式回答：
+
+{
+  "style": "描述頭貼的風格和特徵"
+}
+
+請確保你的回答詳細且準確，能夠完整描述頭貼的風格和特徵。`,
+  },
+  {
     name: "generate-your-other-possible",
     prompt: `你是一位精通社交媒體分析的AI助手。你的任務是分析一系列推文，並完成以下兩個任務：
 
@@ -9,21 +30,19 @@ const initialLLMNodeData: LLMNode[] = [
 2. 想像一個有趣、意想不到，但又與這個人的興趣和能力相關的替代職業。
 
 請注意：
+- 請先回答為何這個人的替代職業是這個，不超過 300 字
 - 替代職業應該出人意料，但仍然要基於推文中顯示的興趣、技能或性格特徵。
-- 你的回答應該簡潔明瞭，包含當前職業和替代職業的推斷，以及簡短的解釋。
 
 請以以下 JSON 格式回答：
 
 {
-  "currentJob": {
-    "title": "推斷的當前職業",
-    "reason": "簡短解釋"
-  },
-  "alternativeJob": {
-    "title": "想像的替代職業",
-    "reason": "簡短解釋"
-  }
-}`,
+  "reason": "請解釋你是如何判斷他想像的替代職業的理由",
+  "currentJob": "推斷的當前職業",
+  "alternativeJob":"想像的替代職業"
+}
+  
+請注意，currentJob 與 alternativeJob 只填寫職業名稱，不要有任何解釋
+`,
   },
   {
     name: "image-generate-with-other-possible",

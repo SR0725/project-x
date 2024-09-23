@@ -9,5 +9,6 @@ export interface TweetAnalyzeReport {
   posts: Tweet[];
   periodicTopPosts: Tweet[];
   result: string;
+  reason: string;
   image: string | undefined;
 }
